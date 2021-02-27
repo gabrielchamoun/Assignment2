@@ -44,7 +44,8 @@ spy(G)
 dA = decomposition(G,'lu');
 V = dA\F;
 Vmap = reshape(V, [ny nx]);    % Reshaping Vector to a matrix
-figure('name', 'FD Solution'), surf(Vmap); % Plotting
+figure('name', 'Finite Difference Solution');
+surf(Vmap'), title('Finite Difference Solution');
 
 
 % ANALYTICAL SOLUTION
@@ -61,7 +62,7 @@ figure('name', 'Analytical Solution')
 for n = 1:2:99
     V = V + ( (1/n) * (cosh((n*pi*X)/a)/cosh((n*pi*b)/a)) ...
                     .* sin((n*pi*Y)/a) );
-    surf(4/pi * V); % Plotting
+    surf(4/pi*V'), title('Analytical Solution');
     pause(0.01);
 end
 

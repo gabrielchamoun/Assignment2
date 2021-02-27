@@ -48,7 +48,5 @@ end
 dA = decomposition(G,'lu');
 V = dA\F;
 Vmap = reshape(V, [ny, nx]);    % Reshaping Vector to a matrix
-figure('name', 'Solution'), surf(Vmap); % Plotting
-
-
-
+figure('name', 'Finite Difference Solution');
+surf(Vmap'), title('Finite Difference Solution');
