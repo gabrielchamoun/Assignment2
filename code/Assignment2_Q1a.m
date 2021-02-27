@@ -2,7 +2,7 @@ clc; close all; clear all;
 set(0, 'DefaultFigureWindowStyle', 'docked')
 
 nx = 50;   % # of colums
-ny = 50;   % # of rows
+ny = 75;   % # of rows
 G = sparse(nx*ny,ny*nx);
 F = zeros(nx*ny,1);
 for i = 1:nx
@@ -20,16 +20,16 @@ for i = 1:nx
         elseif i == nx
             G(n,n) = 1;
             F(n,1) = 0;
-        elseif j == 0 
-            G(n,n) = -3;
-            G(n,nxm) = 1;
-            G(n,nxp) = 1;
-            G(n,nym) = 1;
-        elseif j == ny
+        elseif j == 1
             G(n,n) = -3;
             G(n,nxm) = 1;
             G(n,nxp) = 1;
             G(n,nyp) = 1;
+        elseif j == ny
+            G(n,n) = -3;
+            G(n,nxm) = 1;
+            G(n,nxp) = 1;
+            G(n,nym) = 1;
         else
             G(n,n) = -4;
             G(n,nxm) = 1;
@@ -47,7 +47,7 @@ end
 % Solving the set of linear equations to obtain voltage values
 dA = decomposition(G,'lu');
 V = dA\F;
-Vmap = reshape(V, [nx, ny]);    % Reshaping Vector to a matrix
+Vmap = reshape(V, [ny, nx]);    % Reshaping Vector to a matrix
 figure('name', 'Solution'), surf(Vmap); % Plotting
 
 

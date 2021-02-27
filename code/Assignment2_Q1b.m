@@ -2,7 +2,7 @@ clc; close all; clear all;
 set(0, 'DefaultFigureWindowStyle', 'docked')
 
 nx = 50;   % # of colums
-ny = 50;   % # of rows
+ny = 75;   % # of rows
 G = sparse(nx*ny,ny*nx);
 F = zeros(nx*ny,1);
 for i = 1:nx
@@ -37,11 +37,32 @@ for i = 1:nx
     end
 end
 
-% figure('name', 'G Matrix')
-% spy(G)
+figure('name', 'G Matrix')
+spy(G)
 
 % Solving the set of linear equations to obtain voltage values
 dA = decomposition(G,'lu');
 V = dA\F;
-Vmap = reshape(V, [nx ny]);    % Reshaping Vector to a matrix
-figure('name', 'Solution'), surf(Vmap); % Plotting
+Vmap = reshape(V, [ny nx]);    % Reshaping Vector to a matrix
+figure('name', 'FD Solution'), surf(Vmap); % Plotting
+
+
+% ANALYTICAL SOLUTION
+L = 300;
+W = 200;
+a = L;
+b = W/2;
+x = linspace(-b, b, nx);
+y = linspace(0, a, ny);
+V = zeros(ny, nx);
+
+figure('name', 'Analytical Solution')
+[X,Y] = meshgrid(x,y);
+for n = 1:2:99
+    V = V + ( (1/n) * (cosh((n*pi*X)/a)/cosh((n*pi*b)/a)) ...
+                    .* sin((n*pi*Y)/a) );
+    surf(4/pi * V); % Plotting
+    pause(0.01);
+end
+
+
